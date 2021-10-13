@@ -62,7 +62,6 @@ public:
 	string printToString(Node* p);
 	string printToString() { return printToString(root); }
 	void deleteSubTree(string val);
-	void delete_(Node* p);
 	void process() { process(root); }
 };
 

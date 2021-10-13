@@ -68,6 +68,19 @@ void Tree::process(Node* p)
 	}
 }
 
+void Tree::deleteAllSubTree(Node* t)
+{
+	if (t->isLeaf)
+		return;
+	auto it = t->answersList.begin();
+	for (;it != (*t).answersList.end();it++)
+	{
+		delete_((*it)->son);
+		delete t;
+	}
+	t->answersList.clear();
+}
+
 void Tree::addRoot(string newval) // add new root
 {
 	if (root != NULL) // if root not new
@@ -97,18 +110,7 @@ void Tree::deleteSubTree(string val)
 	Node* pointer;
 	pointer = search(this->root, val, father_pointer);
 	father_pointer->isLeaf = true;
-	delete_(father_pointer);
+	deleteAllSubTree(pointer);
 	//father_pointer->answersList.clear();
 }
 
-void Tree::delete_(Node* p)
-{
-	if (p->isLeaf)
-		return;
-	auto it = p->answersList.begin();
-	for (;it != (*p).answersList.end();it++)
-	{
-		delete((*it)->son);
-	}
-	p->answersList.clear();
-}
