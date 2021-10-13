@@ -75,7 +75,7 @@ void Tree::deleteAllSubTree(Node* t)
 	auto it = t->answersList.begin();
 	for (;it != (*t).answersList.end();it++)
 	{
-		delete_((*it)->son);
+		deleteAllSubTree((*it)->son);
 		delete t;
 	}
 	t->answersList.clear();
