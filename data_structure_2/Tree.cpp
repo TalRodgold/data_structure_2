@@ -7,23 +7,65 @@ void Node::removeSonValue(string v)
 
 
 
-Node* Tree::search(Node* p, string val)
+Node* Tree::search(Node* p, string val, Node*& parent)
 {
-	Node* node_pointer = p;
-	Answer* pointer = p->answersList.front();
+	if (p->value == val)
+	{
+		return p;
+	}
+	if (p->isLeaf)
+	{
+		return;
+	}
 	std::list<Answer*>::iterator it;
 	for (it = p->answersList.begin(); it != p->answersList.end(); ++it)
 	{
-		while (!node_pointer->isLeaf)
+		Node* tmp = search((*it)->son, val, p);
+		//if (tmp != NULL)
+			//return tmp;
+
+	}
+}
+
+bool Tree::searchAndPrint(Node* p, string val)
+{
+	if (p->value == val)
+	{
+		return p;
+	}
+	if (p->isLeaf)
+	{
+		return;
+	}
+	std::list<Answer*>::iterator it;
+	for (it = p->answersList.begin(); it != p->answersList.end(); ++it)
+	{
+		searchAndPrint((*it)->son, val);	
+	}
+	cout << p->value << "=>";
+}
+
+void Tree::print(Node* p, int level)
+{
+}
+
+void Tree::process(Node* p)
+{
+	if (p->isLeaf)
+	{
+		cout << p->value << endl;
+	}
+	cout << p->value << endl;
+	string user_answer;
+	cin >> user_answer;
+	std::list<Answer*>::iterator it;
+	for (it = p->answersList.begin(); it != p->answersList.end(); ++it)
+	{
+		if (user_answer == (*it)->ans)
 		{
-			if (node_pointer->value == val)
-			{
-				return node_pointer;
-			}
-			node_pointer = (*it)->son;
+			process((*it)->son);
 		}
 	}
-	return nullptr;
 }
 
 void Tree::addRoot(string newval) // add new root
@@ -47,4 +89,13 @@ bool Tree::addSon(string fatherquestion, string newanswer, string newval)
 	Answer next_statment(newanswer, son_val);
 	Answer* pointer = location->answersList.back();
 	location->answersList.emplace_back(newanswer, son_val);
+}
+
+void Tree::deleteSubTree(string val)
+{
+	Node* father_pointer = this->root;
+	Node* pointer;
+	pointer = search(this->root, val, father_pointer);
+	father_pointer->isLeaf = true;
+	father_pointer->answersList.clear();
 }

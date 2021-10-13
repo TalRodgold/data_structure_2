@@ -32,7 +32,7 @@ public:
 class Tree
 {
 	Node* root;
-	Node* search(Node* p, string val);
+	Node* search(Node* p, string val, Node*& parent);
 	//returns node t where the string equals val. If t has a prent, the pointer parent will contain its address. 
 
 	bool searchAndPrint(Node* p, string val);
