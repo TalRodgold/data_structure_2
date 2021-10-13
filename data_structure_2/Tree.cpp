@@ -97,5 +97,18 @@ void Tree::deleteSubTree(string val)
 	Node* pointer;
 	pointer = search(this->root, val, father_pointer);
 	father_pointer->isLeaf = true;
-	father_pointer->answersList.clear();
+	delete_(father_pointer);
+	//father_pointer->answersList.clear();
+}
+
+void Tree::delete_(Node* p)
+{
+	if (p->isLeaf)
+		return;
+	auto it = p->answersList.begin();
+	for (;it != (*p).answersList.end();it++)
+	{
+		delete((*it)->son);
+	}
+	p->answersList.clear();
 }
