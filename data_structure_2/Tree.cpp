@@ -100,15 +100,16 @@ bool Tree::addSon(string fatherquestion, string newanswer, string newval)
 		return false;
 	}
 	location->isLeaf = false;
-	Node user_input(newval);
-	Answer next_statment(newanswer, &user_input);
-	if (location->answersList.empty())
-	{
-		location->answersList.push_front(&next_statment);
-		return true;
-	}
-	location->answersList.push_back(&next_statment);
+	Node* user_input=new Node(newval);
+	Answer* next_statment =new Answer(newanswer, user_input);
+	location->answersList.push_back(next_statment);
 	return true;
+	/*if (location->answersList.empty())
+	{
+		location->answersList.push_front(next_statment);
+		return true;
+	}*/
+	
 
 }
 
