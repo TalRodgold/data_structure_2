@@ -105,6 +105,11 @@ bool Tree::addSon(string fatherquestion, string newanswer, string newval)
 	location->answersList.emplace_back(newanswer, son_val);
 }
 
+string Tree::printToString(Node* p)
+{
+	return p->value;
+}
+
 void Tree::deleteSubTree(string val)
 {
 	Node* father_pointer = this->root;
