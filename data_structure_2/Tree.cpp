@@ -17,14 +17,15 @@ Node* Tree::search(Node* p, string val, Node*& parent)
 	{
 		return NULL;
 	}
-	std::list<Answer*>::iterator it;
-	for (it = p->answersList.begin(); it != p->answersList.end(); ++it)
+	//std::list<Answer*>::iterator it;
+	for (auto it = p->answersList.begin(); it != p->answersList.end(); ++it)
 	{
 		Node* tmp = search((*it)->son, val, p);
-		//if (tmp != NULL)
-			//return tmp;
+		if (tmp != NULL)
+			return tmp;
 
 	}
+	return NULL;
 }
 
 bool Tree::searchAndPrint(Node* p, string val)
@@ -92,7 +93,7 @@ void Tree::addRoot(string newval) // add new root
 
 bool Tree::addSon(string fatherquestion, string newanswer, string newval)
 {
-	Node* location = search(this->root, fatherquestion,this->root);
+	Node* location = search(this->root, fatherquestion);
 	if(location == NULL)
 	{
 		return false;
@@ -105,10 +106,20 @@ bool Tree::addSon(string fatherquestion, string newanswer, string newval)
 	//location->answersList.emplace_back(newanswer, son_val);/
 }
 
-string Tree::printToString(Node* p)
-{
-	return p->value;
-}
+//string Tree::printToString(Node* p)
+//{
+//	if (p->isLeaf)
+//	{
+//		return;
+//	}
+//	std::list<Answer*>::iterator it;
+//	for (it = p->answersList.begin(); it != p->answersList.end(); ++it)
+//	{
+//		string s = "(" + printToString();
+//	}
+//	cout << p->value << "=>";
+//	
+//}
 
 void Tree::deleteSubTree(string val)
 {
