@@ -17,15 +17,14 @@ Node* Tree::search(Node* p, string val, Node*& parent)
 	{
 		return NULL;
 	}
-	//std::list<Answer*>::iterator it;
-	for (auto it = p->answersList.begin(); it != p->answersList.end(); ++it)
+	std::list<Answer*>::iterator it;
+	for (it = p->answersList.begin(); it != p->answersList.end(); ++it)
 	{
 		Node* tmp = search((*it)->son, val, p);
-		if (tmp != NULL)
-			return tmp;
+		//if (tmp != NULL)
+			//return tmp;
 
 	}
-	return NULL;
 }
 
 bool Tree::searchAndPrint(Node* p, string val)
@@ -41,7 +40,7 @@ bool Tree::searchAndPrint(Node* p, string val)
 	std::list<Answer*>::iterator it;
 	for (it = p->answersList.begin(); it != p->answersList.end(); ++it)
 	{
-		searchAndPrint((*it)->son, val);	
+		searchAndPrint((*it)->son, val);
 	}
 	cout << p->value << "=>";
 }
@@ -74,7 +73,7 @@ void Tree::deleteAllSubTree(Node* t)
 	if (t->isLeaf)
 		return;
 	auto it = t->answersList.begin();
-	for (;it != (*t).answersList.end();it++)
+	for (; it != (*t).answersList.end(); it++)
 	{
 		deleteAllSubTree((*it)->son);
 		delete t;
@@ -93,8 +92,8 @@ void Tree::addRoot(string newval) // add new root
 
 bool Tree::addSon(string fatherquestion, string newanswer, string newval)
 {
-	Node* location = search(this->root, fatherquestion);
-	if(location == NULL)
+	Node* location = search(this->root, fatherquestion, this->root);
+	if (location == NULL)
 	{
 		return false;
 	}
@@ -102,23 +101,14 @@ bool Tree::addSon(string fatherquestion, string newanswer, string newval)
 	Node* son_val = new Node(newval);
 	Answer next_statment(newanswer, son_val);
 	Answer* pointer = location->answersList.back();
-	location->answersList.emplace_back(newanswer, son_val);
+	location->answersList.push_back(pointer);
+	//location->answersList.emplace_back(newanswer, son_val);/
 }
 
-//string Tree::printToString(Node* p)
-//{
-//	if (p->isLeaf)
-//	{
-//		return;
-//	}
-//	std::list<Answer*>::iterator it;
-//	for (it = p->answersList.begin(); it != p->answersList.end(); ++it)
-//	{
-//		string s = "(" + printToString();
-//	}
-//	cout << p->value << "=>";
-//	
-//}
+string Tree::printToString(Node* p)
+{
+	return p->value;
+}
 
 void Tree::deleteSubTree(string val)
 {
@@ -129,4 +119,3 @@ void Tree::deleteSubTree(string val)
 	deleteAllSubTree(pointer);
 	//father_pointer->answersList.clear();
 }
-
