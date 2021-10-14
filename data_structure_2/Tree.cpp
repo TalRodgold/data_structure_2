@@ -117,5 +117,5 @@ void Tree::deleteSubTree(string val)
 	pointer = search(this->root, val, father_pointer);
 	father_pointer->isLeaf = true;
 	deleteAllSubTree(pointer);
-	//father_pointer->answersList.clear();
+	//father_pointer->answersList.clear(); ?
 }
