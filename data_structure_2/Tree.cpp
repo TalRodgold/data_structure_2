@@ -15,16 +15,17 @@ Node* Tree::search(Node* p, string val, Node*& parent)
 	}
 	if (p->isLeaf)
 	{
-		return;
+		return NULL;
 	}
-	std::list<Answer*>::iterator it;
-	for (it = p->answersList.begin(); it != p->answersList.end(); ++it)
+	//std::list<Answer*>::iterator it;
+	for (auto it = p->answersList.begin(); it != p->answersList.end(); ++it)
 	{
 		Node* tmp = search((*it)->son, val, p);
-		//if (tmp != NULL)
-			//return tmp;
+		if (tmp != NULL)
+			return tmp;
 
 	}
+	return NULL;
 }
 
 bool Tree::searchAndPrint(Node* p, string val)
@@ -35,7 +36,7 @@ bool Tree::searchAndPrint(Node* p, string val)
 	}
 	if (p->isLeaf)
 	{
-		return;
+		return NULL;
 	}
 	std::list<Answer*>::iterator it;
 	for (it = p->answersList.begin(); it != p->answersList.end(); ++it)
@@ -68,18 +69,18 @@ void Tree::process(Node* p)
 	}
 }
 
-void Tree::deleteAllSubTree(Node* t)
-{
-	if (t->isLeaf)
-		return;
-	auto it = t->answersList.begin();
-	for (;it != (*t).answersList.end();it++)
-	{
-		delete_((*it)->son);
-		delete t;
-	}
-	t->answersList.clear();
-}
+//void Tree::deleteAllSubTree(Node* t)
+//{
+//	if (t->isLeaf)
+//		return;
+//	std::list<Answer*>::iterator it;
+//	for (it = t->answersList.begin(); it != t->answersList.end(); ++it)
+//	{
+//		deleteAllSubTree((*it)->son);
+//		delete t;
+//	}
+//	t->answersList.clear();
+//}
 
 void Tree::addRoot(string newval) // add new root
 {
@@ -92,7 +93,7 @@ void Tree::addRoot(string newval) // add new root
 
 bool Tree::addSon(string fatherquestion, string newanswer, string newval)
 {
-	Node* location = search(this->root, fatherquestion);
+	Node* location = search(this->root, fatherquestion, this->root);
 	if(location == NULL)
 	{
 		return false;
@@ -101,13 +102,25 @@ bool Tree::addSon(string fatherquestion, string newanswer, string newval)
 	Node* son_val = new Node(newval);
 	Answer next_statment(newanswer, son_val);
 	Answer* pointer = location->answersList.back();
-	location->answersList.emplace_back(newanswer, son_val);
+	//location->answersList.emplace_back(newanswer, son_val);
+	location->answersList.push_back(pointer);
+	return true;
 }
 
-string Tree::printToString(Node* p)
-{
-	return p->value;
-}
+//string Tree::printToString(Node* p)
+//{
+//	if (p->isLeaf)
+//	{
+//		return;
+//	}
+//	std::list<Answer*>::iterator it;
+//	for (it = p->answersList.begin(); it != p->answersList.end(); ++it)
+//	{
+//		string s = "(" + printToString();
+//	}
+//	cout << p->value << "=>";
+//	
+//}
 
 void Tree::deleteSubTree(string val)
 {
