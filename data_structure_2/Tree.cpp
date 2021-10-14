@@ -100,8 +100,10 @@ bool Tree::addSon(string fatherquestion, string newanswer, string newval)
 	location->isLeaf = false;
 	Node* son_val = new Node(newval);
 	Answer next_statment(newanswer, son_val);
-	Answer* pointer = location->answersList.back();
+	Answer* pointer = &next_statment;
+		//Answer* pointer = location->answersList.back();
 	location->answersList.push_back(pointer);
+	
 	//location->answersList.emplace_back(newanswer, son_val);/
 }
 
