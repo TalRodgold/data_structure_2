@@ -102,7 +102,7 @@ bool Tree::addSon(string fatherquestion, string newanswer, string newval)
 	Answer next_statment(newanswer, son_val);
 	Answer* pointer = location->answersList.back();
 	location->answersList.push_back(pointer);
-	location->answersList.emplace_back(newanswer, son_val);
+	//location->answersList.emplace_back(newanswer, son_val);
 }
 
 string Tree::printToString(Node* p)
