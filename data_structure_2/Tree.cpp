@@ -15,7 +15,7 @@ Node* Tree::search(Node* p, string val, Node*& parent)
 	}
 	if (p->isLeaf)
 	{
-		return;
+		return NULL;
 	}
 	std::list<Answer*>::iterator it;
 	for (it = p->answersList.begin(); it != p->answersList.end(); ++it)
@@ -35,7 +35,7 @@ bool Tree::searchAndPrint(Node* p, string val)
 	}
 	if (p->isLeaf)
 	{
-		return;
+		return NULL;
 	}
 	std::list<Answer*>::iterator it;
 	for (it = p->answersList.begin(); it != p->answersList.end(); ++it)
@@ -92,7 +92,7 @@ void Tree::addRoot(string newval) // add new root
 
 bool Tree::addSon(string fatherquestion, string newanswer, string newval)
 {
-	Node* location = search(this->root, fatherquestion);
+	Node* location = search(this->root, fatherquestion,this->root);
 	if(location == NULL)
 	{
 		return false;
@@ -101,6 +101,7 @@ bool Tree::addSon(string fatherquestion, string newanswer, string newval)
 	Node* son_val = new Node(newval);
 	Answer next_statment(newanswer, son_val);
 	Answer* pointer = location->answersList.back();
+	location->answersList.push_back(pointer);
 	location->answersList.emplace_back(newanswer, son_val);
 }
 
