@@ -72,13 +72,15 @@ void Tree::process(Node* p)
 
 void Tree::deleteAllSubTree(Node* t)
 {
+	if (t == nullptr)
+		return;
 	if (t->isLeaf)
 		return;
-	auto it = t->answersList.begin();
-	for (; it != (*t).answersList.end(); it++)
+	std::list<Answer*>::iterator it;
+	for (it = t->answersList.begin(); it != t->answersList.end(); ++it)
 	{
 		deleteAllSubTree((*it)->son);
-		delete t;
+		delete *it;
 	}
 	t->answersList.clear();
 }
