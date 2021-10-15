@@ -21,12 +21,15 @@ Node* Tree::search(Node* p, string val, Node*& parent)
 	for (it = p->answersList.begin(); it != p->answersList.end(); ++it)
 	{
 		
-		return search((*it)->son, val, p);
+		if (search((*it)->son, val, p) == NULL)
+			continue;
+		else
+			return search((*it)->son, val, p);
 		//if (tmp != NULL)
 			//return tmp;
 
 	}
-
+	return NULL;
 }
 
 bool Tree::searchAndPrint(Node* p, string val)
