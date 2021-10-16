@@ -1,4 +1,7 @@
-
+// NAME:  Tal Rodgold  & Avichay Kadosh
+// ID:    318162344    & 313317364
+// GROUP: Haim Prianti & Efi Naftali
+// PROJECT NUMBER: 1
 #include <iostream>
 #include <list>
 #include <string>
@@ -36,7 +39,7 @@ class Tree
 	//returns node t where the string equals val. If t has a prent, the pointer parent will contain its address. 
 
 	bool searchAndPrint(Node* p, string val);
-	void print(Node* p, int level = 0);
+	void print(Node* p);
 	void process(Node* p);
 public:
 	Tree() { root = NULL; }
@@ -58,7 +61,7 @@ public:
 		Node* area = search(root, val, parent);
 		if (area) print(root);
 	}
-	void printAllTree() { print(root); }
+	void printAllTree() { cout << root->value << endl; print(root); }
 	string printToString(Node* p);
 	string printToString() { return printToString(root); }
 	void deleteSubTree(string val);

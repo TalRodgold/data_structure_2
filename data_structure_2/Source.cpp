@@ -1,6 +1,6 @@
-// NAME: Tal Rodgold & Avichay Kadosh
-// ID:   318162344   & 313317364
-// GROUP: Haim Prianti & 
+// NAME:  Tal Rodgold  & Avichay Kadosh
+// ID:    318162344    & 313317364
+// GROUP: Haim Prianti & Efi Naftali
 // PROJECT NUMBER: 1
 
 #include <iostream>
@@ -39,7 +39,7 @@ int main()
 				if (t.addSon(father, val, sol)) cout << "success\n"; else cout << "ERROR\n"; break;
 			case 'd':cout << "enter value of subtree to delete (with no space) "; cin >> val; t.deleteSubTree(val);  break;
 			case 'p':t.printAllTree();  break;
-			case 'w':cout << "enter a value (with no space) "; cin >> val; t.searchAndPrint(val); cout << endl;  break;
+			case 'w':cout << "enter a value (with no space) "; cin >> val; cout << val; t.searchAndPrint(val); cout << endl;  break;
 			case 'r':t.process(); cout << endl;  break;
 			case 'e':cout << "bye "; break;
 			case 't':cout << t.printToString(); cout << endl;  break;
