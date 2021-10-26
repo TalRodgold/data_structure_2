@@ -14,6 +14,7 @@ Node* Tree::search(Node* p, string val, Node*& parent) // search value in tree
 {
 	if (p->value == val) // if val is found
 	{
+		parent = p;//
 		return p; // return node
 	}
 	if (p->isLeaf) // if leaf
