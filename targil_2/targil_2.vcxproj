@@ -140,8 +140,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp" />
-    <ClCompile Include="HashTbls.cpp" />
-    <ClCompile Include="Item.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Volunteer.cpp" />
   </ItemGroup>

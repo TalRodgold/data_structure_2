@@ -2,144 +2,131 @@
 #include <iostream>
 #include "Item.h"
 #include <list>
-template<class T, class k>
+using namespace std;
+
+template<class T, class K>
 class HashTbls
 {
+protected:
 	int size;
-	Item<T, K>** tbl;//T is item K is key
+	Item<T, K>* tbl;//T is item K is key
 
 public:
 	HashTbls(int number);//constructor
 	~HashTbls();//distructor
-    virtual int H1();// = 0;//asistenting hash function
-    virtual int H2();// = 0;// hash function
-    int Hash(class K, int I=0);
-    void Hash_insert(class T, class K);
-    int Hash_search(class T, class K);
+    virtual int H1() = 0;//asistenting hash function
+    virtual int H2() = 0;// hash function
+    int isPrime(int);
+    int Hash(K k, int I);
+    void Hash_insert(Item<T, K> item);
+    int Hash_search(T t);
+    void Hash_delete(T t, K k);
+    void Hash_print();
 };
-template <class T, class K>
-class Item
-{
-public:
-    T data;
-    K key;
-    state flag;
-    Item() {}//defult constructor
-    Item(T d, K k, state f) { data = d; key = k; flag = f; }//constructor 
-};
-template<class T, class k>
-HashTbls<T, k>::HashTbls(int number)//constructor
-{
-#pragma region MyRegion
-    int size = isPrime(number);
-    tbl = new Item<T, K>*[size];
-#pragma endregion
 
+template<class T, class K>
+inline HashTbls<T, K>::HashTbls(int number)//constructor
+{
+    size = isPrime(number); 
+    tbl = new Item<T, K>[size];
 }
 
-template<class T, class k>
-HashTbls<T, k>::~HashTbls()//distructor
+template<class T, class K>
+inline HashTbls<T, K>::~HashTbls()//distructor
 {
-#pragma region MyRegion
+    delete tbl; 
+}
+
+template<class T, class K>
+inline int HashTbls<T, K>::Hash(K k, int I)
+{
+    return (k + I) % size;
+}
+
+template<class T, class K>
+inline void HashTbls<T, K>::Hash_insert(Item<T, K> item)
+{
+    int j = 0;
     for (int i = 0; i < size; i++)
     {
-        delete* tbl[i];
+        j = Hash(item.key, i);
+        if (tbl[j].flag == state::empty)
+        {
+            tbl[j] = item;
+            tbl[j].flag = static_cast<state>(1); // casting
+            return;
+        }
+        if (tbl[j].key == static_cast<state>(2))
+        {
+            tbl[j] = item;
+            return;
+        }
     }
-    delete tbl;
-#pragma endregion  
+    throw "OVERFLOW!";
 }
 
-template<class T, class k>
-int Hash_search(T, K)//return the index of cell of key k 
+template<class T, class K>
+inline int HashTbls<T, K>::Hash_search(T t)
 {
-#pragma region MyRegion
     int i = 0;
     int j = 0;
-    while (i < m or tbl[j] != NULL)
+    while (i < size || tbl[j].flag != NULL)
     {
-        j = hash2(k, i);
-        if (tbl[j] == k)
+        j = Hash(t, i);
+        if (tbl[j].key == t)
         {
             return j;
         }
         i = i + 1;
-        return NULL;
+        return -1;
     }
-#pragma endregion
-
 }
 
-template<class T, class k>
- int Hash(K, int I)//return hush value with known i
+template<class T, class K>
+inline void HashTbls<T, K>::Hash_delete(T t, K k)
 {
-     return (h1(k) + i) % size;
+    int i = Hash_search(k);
+    tbl[i].flag = static_cast<state>(2);
 }
 
-
-//template<class T, class k>
-//int HashTbls<T, k>::H1(class K k)
-//{
-//    return k % size;
-//}
-template<class T, class k>
-int H1(class K k)//asistenting hash function
+template<class T, class K>
+inline void HashTbls<T, K>::Hash_print()
 {
-    return k * size;
-}
-template<class T, class k>
-int H2(class K k)// hash function
-{
-    return hush(k);
-}
-
-template<class T, class k>
-void Hash_insert(T, K)//insret a item by key value 
-{
-#pragma region MyRegion
-    int i = 0;
-    int j = 0;
-    while (i < m)
+    for (int i=0;i<size;i++)
     {
-        j = hash2(k, i);
-        if (tbl[j] == NULL )|| tbl[j] == NULL)
+        if (tbl[i].flag == full)
         {
-            tbl[j] = k;
-            return j;
+            cout << tbl[i].data << endl;
         }
-        if (*(tbl[j]).key == -1)
-        {
-            delete tbl[j];
-            tbl[j] = new  Item<T,K>;
-            tbl[j] = k;
-            return j;
-        }
-        else
-        {
-            i = i + 1;
-        }
-        throw "ERROR";
     }
-#pragma endregion
 }
 
-
-
-
-
-
-int isPrime(int num)//return the closer prime number to size of arrey
+template<class T, class K>
+inline int HashTbls<T,K>::isPrime(int num)//return the closer prime number to size of arrey
 {
 #pragma region MyRegion
 
     for (int i = 2; i <= num / 2; i++) {
         if (num % i == 0)
         {
-            isPrime(num++);
+            isPrime(++num);
         }
     }
     return num;
 #pragma endregion
 }
+
+template<class T, class k>
+inline int H1(class K k)//asistenting hash function
+{
+    return k * size;
+}
+template<class T, class k>
+inline int H2(class K k)// hash function
+{
+    return hush(k);
+}
+
 
 
 

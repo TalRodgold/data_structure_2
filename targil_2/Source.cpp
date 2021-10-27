@@ -3,12 +3,15 @@
 // GROUP: Haim Prianti & Efi Naftali
 // PROJECT NUMBER: 2
 
+#include"HashTbls.h"
+#include"Volunteer.h"
+
 #include <iostream>
 #include <string>
 using namespace std;
 
 
-void main()
+int main()
 {
 	char ch;
 	volunteer v;
