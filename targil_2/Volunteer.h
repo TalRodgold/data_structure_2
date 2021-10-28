@@ -62,7 +62,7 @@ inline istream& operator>>(istream& is, Volunteer& in)
 	string input_address;
 	int input_phone;
 	string input_city;
-	is >> input_name >> input_address >> input_phone >> input_phone;
+	is >> input_name >> input_address >> input_phone >> input_city;
 	in.name = input_name;
 	in.address = input_address;
 	in.phone = input_phone;

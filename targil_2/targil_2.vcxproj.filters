@@ -32,5 +32,11 @@
     <ClInclude Include="Client.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HashVolunteer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HashClient.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

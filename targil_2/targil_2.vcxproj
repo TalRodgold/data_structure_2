@@ -143,7 +143,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h" />
+    <ClInclude Include="HashClient.h" />
     <ClInclude Include="HashTbls.h" />
+    <ClInclude Include="HashVolunteer.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Volunteer.h" />
   </ItemGroup>
