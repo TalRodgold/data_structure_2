@@ -11,7 +11,7 @@ class Client
 	string address;
 	list<string> list_of_volunteers;
 public:
-	 Client(string,int,string,list<string> l);
+	 Client(string,int,string,list<string> l);		
 	~Client();
 	Client operator=(const Client& v);
 	bool operator==(const Client& v)const;
