@@ -7,8 +7,8 @@ using namespace std;
 class HashClient:public HashTbls<Client,int>
 {
 public:
-	int H1() override;
-	int H2() override;
+	int H1(int key) override;
+	int H2(int key) override;
 };
 int HashClient::H1(int key)
 {
