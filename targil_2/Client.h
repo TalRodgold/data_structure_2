@@ -10,7 +10,7 @@ class Client:public HashTbls<int, int>
 	string address;
 	string* list
 public:
-	Client() {};
+	 Client() {};
 	~Client() {};
 	Client operator=(const Client& v);
 	Client operator==(const Client& v)const;

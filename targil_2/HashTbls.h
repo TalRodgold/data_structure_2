@@ -19,7 +19,7 @@ public:
     int isPrime(int);
     int Hash(K k, int I);
     void Hash_insert(Item<T, K> item);
-    int Hash_search(T t);
+    int Hash_search(K k);
     void Hash_delete(T t, K k);
     void Hash_print();
 };
@@ -53,10 +53,10 @@ inline void HashTbls<T, K>::Hash_insert(Item<T, K> item)
         if (tbl[j].flag == state::empty)
         {
             tbl[j] = item;
-            tbl[j].flag = static_cast<state>(1); // casting
+            tbl[j].flag = state::full; // casting
             return;
         }
-        if (tbl[j].key == static_cast<state>(2))
+        if (tbl[j].key == state::deleted)
         {
             tbl[j] = item;
             return;
@@ -66,27 +66,27 @@ inline void HashTbls<T, K>::Hash_insert(Item<T, K> item)
 }
 
 template<class T, class K>
-inline int HashTbls<T, K>::Hash_search(T t)
+inline int HashTbls<T, K>::Hash_search(K k)
 {
     int i = 0;
     int j = 0;
-    while (i < size || tbl[j].flag != NULL)
+    while (i < size || tbl[j].flag != state::empty)
     {
-        j = Hash(t, i);
-        if (tbl[j].key == t)
+        j = Hash(k, i);
+        if (tbl[j].key == k)
         {
             return j;
         }
         i = i + 1;
-        return -1;
     }
+    return -1;
 }
 
 template<class T, class K>
 inline void HashTbls<T, K>::Hash_delete(T t, K k)
 {
     int i = Hash_search(k);
-    tbl[i].flag = static_cast<state>(2);
+    tbl[i].flag = state::deleted;
 }
 
 template<class T, class K>
@@ -104,7 +104,6 @@ inline void HashTbls<T, K>::Hash_print()
 template<class T, class K>
 inline int HashTbls<T,K>::isPrime(int num)//return the closer prime number to size of arrey
 {
-#pragma region MyRegion
 
     for (int i = 2; i <= num / 2; i++) {
         if (num % i == 0)
@@ -113,18 +112,6 @@ inline int HashTbls<T,K>::isPrime(int num)//return the closer prime number to si
         }
     }
     return num;
-#pragma endregion
-}
-
-template<class T, class k>
-inline int H1(class K k)//asistenting hash function
-{
-    return k * size;
-}
-template<class T, class k>
-inline int H2(class K k)// hash function
-{
-    return hush(k);
 }
 
 
