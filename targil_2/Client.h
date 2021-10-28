@@ -33,7 +33,7 @@ Client::Client(string n="",int p=0,string a="", list<string> l)
 	name = n;
 	phone = p;
 	address = a;
-	list_of_volunteers = v.list_of_volunteers;
+	list_of_volunteers = l;
 }
 
  bool  Client::operator==(const Client& v) const

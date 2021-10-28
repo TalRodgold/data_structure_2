@@ -14,8 +14,8 @@ protected:
 public:
 	HashTbls(int number);//constructor
 	~HashTbls();//distructor
-    virtual int H1() = 0;//asistenting hash function
-    virtual int H2() = 0;// hash function
+    virtual int H1(K key) = 0;//asistenting hash function
+    virtual int H2(K key) = 0;// hash function
     int isPrime(int);
     int Hash(K k, int I);
     void Hash_insert(Item<T, K> item);
@@ -40,7 +40,7 @@ inline HashTbls<T, K>::~HashTbls()//distructor
 template<class T, class K>
 inline int HashTbls<T, K>::Hash(K k, int I)
 {
-    return (k + I) % size;
+    return (H1(k) + I*H2(k)) % size;
 }
 
 template<class T, class K>
