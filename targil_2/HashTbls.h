@@ -22,6 +22,8 @@ public:
     int Hash_search(K k);
     void Hash_delete(T t, K k);
     void Hash_print();
+    int Get_size();
+    Item<T, K>& operator[](int index);
 };
 
 template<class T, class K>
@@ -56,7 +58,7 @@ inline void HashTbls<T, K>::Hash_insert(Item<T, K> item)
             tbl[j].flag = state::full; // casting
             return;
         }
-        if (tbl[j].key == state::deleted)
+        if (tbl[j].flag == state::deleted)
         {
             tbl[j] = item;
             return;
@@ -99,6 +101,18 @@ inline void HashTbls<T, K>::Hash_print()
             cout << tbl[i].data << endl;
         }
     }
+}
+
+template<class T, class K>
+inline int HashTbls<T, K>::Get_size()
+{
+    { return size; }
+}
+
+template<class T, class K>
+inline Item<T, K>& HashTbls<T, K>::operator[](int index)
+{
+    return tbl[index]; 
 }
 
 template<class T, class K>

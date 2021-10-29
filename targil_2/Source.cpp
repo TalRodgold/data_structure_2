@@ -5,7 +5,8 @@
 
 #include"HashTbls.h"
 #include"Volunteer.h"
-
+#include"Client.h"
+#include"DataBase.h"
 #include <iostream>
 #include <string>
 using namespace std;
@@ -14,10 +15,10 @@ using namespace std;
 int main()
 {
 	char ch;
-	volunteer v;
-	client c;
-	list<volunteer*> lst;
-	HashTbls ht
+	Volunteer v;
+	Client c;
+	list<Volunteer*> lst;
+	DataBase ht;
 
 		cout << "Hash Tables\n";
 	do
@@ -42,4 +43,8 @@ int main()
 		default: cout << "Error ";  break;
 		}
 	} while (ch != 'e');
+
+	ht.PrintAll(v,c);
+	int i = 5;
 }
+

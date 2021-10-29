@@ -139,11 +139,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Client.cpp" />
+    <ClCompile Include="DataBase.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h" />
+    <ClInclude Include="DataBase.h" />
     <ClInclude Include="HashClient.h" />
     <ClInclude Include="HashTbls.h" />
     <ClInclude Include="HashVolunteer.h" />

@@ -2,18 +2,21 @@
 #include "HashTbls.h"
 #include <string>
 #include <iostream>
+#include "Item.h"
 using namespace std;
 
-class Volunteer
+class Volunteer//:public Item<Volunteer, string>
 {
+public:
 	string name;
 	string address;
 	int phone;
 	string city;
-public:
+
 	Volunteer() { name = ""; address = ""; phone = 0; city = ""; }
 	Volunteer(string n , string a, int p, string c);
-	~Volunteer() {};
+	~Volunteer() { }
+	string GetName();
 	Volunteer operator=(const Volunteer& v);
 	bool operator==(const Volunteer& v)const;
 	friend ostream& operator<<(ostream& os, const Volunteer& in); // cout
@@ -26,6 +29,11 @@ inline Volunteer::Volunteer(string n, string a, int p, string c)
 	address = a;
 	phone = p;
 	city = c;
+}
+
+inline string Volunteer::GetName()
+{
+	return name;
 }
 
 inline Volunteer Volunteer::operator=(const Volunteer& v)
