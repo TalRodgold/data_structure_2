@@ -1,3 +1,7 @@
+// NAME:  Tal Rodgold  & Avichay Kadosh
+// ID:    318162344    & 313317364
+// GROUP: Haim Prianti & Efi Naftali
+// PROJECT NUMBER: 2
 #pragma once
 #include "HashTbls.h"
 #include <string>
@@ -65,14 +69,14 @@ inline ostream& operator<<(ostream& os, const Volunteer& in)
 
 inline istream& operator>>(istream& is, Volunteer& in)
 {
-	cout << "Enter volunteers details: \n 1)Name \n 2) Address \n 3) Phone number \n 4) city" << endl; // print
+	cout << "Enter volunteer name phone address" << endl; // print
 	string input_name;
-	string input_address;
+	//string input_address;
 	int input_phone;
 	string input_city;
-	is >> input_name >> input_address >> input_phone >> input_city;
+	is >> input_name  >> input_phone >> input_city;
 	in.name = input_name;
-	in.address = input_address;
+	//in.address = input_address;
 	in.phone = input_phone;
 	in.city = input_city;
 	return is;

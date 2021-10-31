@@ -1,3 +1,7 @@
+// NAME:  Tal Rodgold  & Avichay Kadosh
+// ID:    318162344    & 313317364
+// GROUP: Haim Prianti & Efi Naftali
+// PROJECT NUMBER: 2
 #pragma once
 #include <iostream>
 #include "Item.h"
@@ -36,7 +40,10 @@ inline HashTbls<T, K>::HashTbls(int number)//constructor
 template<class T, class K>
 inline HashTbls<T, K>::~HashTbls()//distructor
 {
-    delete tbl; 
+    if (tbl)
+    {
+        delete[] tbl;
+    }
 }
 
 template<class T, class K>

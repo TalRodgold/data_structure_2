@@ -1,10 +1,14 @@
+// NAME:  Tal Rodgold  & Avichay Kadosh
+// ID:    318162344    & 313317364
+// GROUP: Haim Prianti & Efi Naftali
+// PROJECT NUMBER: 2
 #pragma once
 #include <iostream>
 #include<string>
 #include <list>
 #include <algorithm>
-#include "Item.h"
 using namespace std;
+
 class Client//:public Item<Client, int>
 {
 public:
@@ -15,7 +19,7 @@ public:
 
 	 Client(string,int,string);		
 	 Client() { name = ""; phone = 0; address = ""; }
-	 ~Client() {};
+	 ~Client(){}
 	int GetPhone();
 	string GetName() { return name; }
 	void Print_list();
@@ -34,14 +38,15 @@ inline int Client::GetPhone()
 }
 inline void Client::Print_list()
 {
-	cout << "list of all volunteers" << endl;
+	cout << "The clients that were helped by volunteer " << this->name << ":";
 	for_each(list_of_volunteers.begin(), list_of_volunteers.end(), [](string n) { cout << n << endl; });
 }
 inline void Client::Add_to_list(string s)
 {
+
 	if (find(list_of_volunteers.begin(), list_of_volunteers.end(), s) != list_of_volunteers.end())
 	{
-		return;
+		throw "ERROR";
 	}
 	list_of_volunteers.push_back(s);
 }
@@ -88,12 +93,12 @@ inline ostream& operator<<(ostream& os, const Client& in)
 
  inline istream& operator>>(istream& is, Client& in)
  {
-	 cout << "Enter volunteers details: \n 1)Name \n 2) Address \n 3) Phone number \n " << endl; // print
+	 cout << "please enter name and phone and address of client " << endl; // print
 	string input_name;
 	string input_address;
 	int input_phone;
 	//string v;
-	is >> input_name >> input_address >> input_phone ;
+	is >> input_name >> input_phone >> input_address  ;
 	in.name = input_name;
 	in.address = input_address;
 	in.phone = input_phone;

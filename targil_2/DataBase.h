@@ -1,9 +1,14 @@
+// NAME:  Tal Rodgold  & Avichay Kadosh
+// ID:    318162344    & 313317364
+// GROUP: Haim Prianti & Efi Naftali
+// PROJECT NUMBER: 2
 #pragma once
 #include "HashClient.h"
 #include "HashVolunteer.h"
 #include <string>
 #include <iostream>
 using namespace std;
+
 class DataBase
 {
 	HashClient hash_client{ 100 };
@@ -41,7 +46,14 @@ inline void DataBase::Delete_client(Client c)
 
 inline void DataBase::addVolunteerToClient(Volunteer v, Client c)
 {
+
+	if ((hash_client.Hash_search(c.GetPhone()) == -1) || (hash_volunteer.Hash_search(v.GetName()) == -1))
+	{
+		throw "ERROR";
+	}
 	c.Add_to_list(v.GetName());
+	
+
 }
 
 inline void DataBase::listOfVolunteers(Client c)
