@@ -51,7 +51,7 @@ inline void DataBase::addVolunteerToClient(Volunteer v, Client c)
 	{
 		throw "ERROR";
 	}
-	c.Add_to_list(v.GetName());
+	c.list_of_volunteers.push_back(v.GetName());
 	
 
 }
