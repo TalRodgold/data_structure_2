@@ -6,6 +6,7 @@
 #include <iostream>
 #include "Item.h"
 #include <list>
+#include <algorithm>
 using namespace std;
 
 template<class T, class K>
@@ -28,6 +29,7 @@ public:
     void Hash_print();
     int Get_size();
     Item<T, K>& operator[](int index);
+    void printall();//i added!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 };
 
 template<class T, class K>
@@ -95,6 +97,10 @@ template<class T, class K>
 inline void HashTbls<T, K>::Hash_delete(T t, K k)
 {
     int i = Hash_search(k);
+    if (i == -1)//i added!!!!!!!!!!!!!!!!!!!!!!1111111
+    {
+        throw "ERROR";
+    }
     tbl[i].flag = state::deleted;
 }
 
@@ -119,7 +125,20 @@ inline int HashTbls<T, K>::Get_size()
 template<class T, class K>
 inline Item<T, K>& HashTbls<T, K>::operator[](int index)
 {
-    return tbl[index]; 
+    return tbl[index]; //the problem is here 
+}
+
+template<class T, class K>
+inline void HashTbls<T, K>::printall()//i added!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111
+{
+    for (int i = 0; i < size; i++)
+    {
+        if (tbl[i].data.phone == 0)
+        {
+            continue;
+        }
+        cout <<"key["<<i<<"]" <<tbl[i].data;
+    }
 }
 
 template<class T, class K>

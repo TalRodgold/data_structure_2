@@ -8,6 +8,7 @@
 #include"DataBase.h"
 #include <iostream>
 #include <string>
+#include <algorithm>
 using namespace std;
 
 int main()
@@ -17,13 +18,11 @@ int main()
 	Client c;
 	list<Volunteer*> lst;
 	DataBase ht;
-	Client co=ht.
 	cout << "Hash Tables\n";
 	do
 	{
 		try
 		{
-		
 			cout << "\nChoose one of the following" << endl;
 			cout << "n: New volunteer" << endl;
 			cout << "d: Del a volunteer " << endl;
@@ -36,10 +35,10 @@ int main()
 			cin >> ch;
 			switch (ch)
 			{
-			case 'n':cin >> v; ht.addVolunteer(v);  break;
-			case 'd':cin >> v.name; ht.delVolunteer(v);  break;
-			case 'c': cin >> c; ht.addClient(c); break;
-			case 'l': cout << "enter volunteer name and client phone ";  cin >> v.name >> c.phone; ht.addVolunteerToClient(v, c); break;
+			case 'n':cin >> v; ht.addVolunteer(v);ht.printallvolunteer();  break;//i added!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+			case 'd':cout << "enter volunteer name ";cin >> v.name; ht.delVolunteer(v);  break;
+			case 'c': cin >> c; ht.addClient(c);ht.printallclient(); break;//i added!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			case 'l': cout << "enter volunteer name and client phone ";  cin >> v.name >> c.phone; ht.addVolunteerToClient(v, c);ht.printallclient(); break;//i added
 			case '*': cout << "enter client phone ";  cin >> c.phone; ht.listOfVolunteers(c); break;
 			case 'i': cout << "enter volunteer name ";  cin >> v.name; ht.listOfClients(v); break;
 			case 'p': ht.PrintAll(v, c);
