@@ -17,7 +17,7 @@ int main()
 	Client c;
 	list<Volunteer*> lst;
 	DataBase ht;
-
+	Client co=ht.
 	cout << "Hash Tables\n";
 	do
 	{

@@ -18,12 +18,10 @@ public:
 	list<string> list_of_volunteers;
 
 	 Client(string,int,string);		
-	 Client() { name = ""; phone = 0; address = ""; }
+	 Client() { name = ""; phone = 0; address = "";}
 	 ~Client(){}
-	int GetPhone();
-	string GetName() { return name; }
 	void Print_list();
-	void Add_to_list(string& s);
+	void Add_to_list(string s);
 	bool Find_in_list(string s);
 	Client operator=(const Client& v);
 	bool operator==(const Client& v)const;
@@ -32,16 +30,12 @@ public:
 	
 };
 
-inline int Client::GetPhone()
-{
-	return phone;
-}
 inline void Client::Print_list()
 {
-	cout << "The clients that were helped by volunteer " << this->name << ":";
+	cout << "The volunteers that helped to client " << this->phone << ": ";
 	for_each(list_of_volunteers.begin(), list_of_volunteers.end(), [](string n) { cout << n << endl; });
 }
-inline void Client::Add_to_list(string& s)
+inline void Client::Add_to_list(string s)
 {
 
 	if (find(list_of_volunteers.begin(), list_of_volunteers.end(), s) != list_of_volunteers.end())

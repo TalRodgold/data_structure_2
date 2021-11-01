@@ -26,52 +26,53 @@ public:
 };
 inline void DataBase::addVolunteer(Volunteer v)
 {
-	hash_volunteer.Hash_insert(Item<Volunteer, string>(v, v.GetName()));
+	hash_volunteer.Hash_insert(Item<Volunteer, string>(v, v.name));
 }
 
 inline void DataBase::delVolunteer(Volunteer v)
 {
-	hash_volunteer.Hash_delete(v, v.GetName());
+	hash_volunteer.Hash_delete(v, v.name);
 }
 
 inline void DataBase::addClient(Client c)
 {
-	hash_client.Hash_insert(Item<Client, int>(c, c.GetPhone()));
+	hash_client.Hash_insert(Item<Client, int>(c, c.phone));
 }
 
 inline void DataBase::Delete_client(Client c)
 {
-	hash_client.Hash_delete(c, c.GetPhone());
+	hash_client.Hash_delete(c, c.phone);
 }
 
 inline void DataBase::addVolunteerToClient(Volunteer v, Client c)
 {
-
-	if ((hash_client.Hash_search(c.GetPhone()) == -1) || (hash_volunteer.Hash_search(v.GetName()) == -1))
+	int index_client = hash_client.Hash_search(c.phone);
+	int index_volunteer = hash_volunteer.Hash_search(v.name);
+	if (index_volunteer == -1 || index_client == -1)
 	{
 		throw "ERROR";
 	}
-	c.list_of_volunteers.push_back(v.GetName());
-	
-
+	hash_client[index_client].data.Add_to_list(v.name);
 }
 
 inline void DataBase::listOfVolunteers(Client c)
 {
-	c.Print_list();
+	int index_client = hash_client.Hash_search(c.phone);
+	hash_client[index_client].data.Print_list();
 }
 
 inline void DataBase::listOfClients(Volunteer v)
 {
+	cout << "The clients that were helped by volunteer " << v.name << ": ";
 	for (int i = 0; i < hash_client.Get_size(); i++)
 	{
 		if (hash_client[i].flag == state::empty || hash_client[i].flag == state::deleted)
 		{
 			continue;
 		}
-		if(hash_client.FindInList(hash_client[i].data, v.GetName()))
+		if(hash_client.FindInList(hash_client[i].data, v.name))
 		{
-			cout << hash_client[i].data.GetName() << endl;
+			cout << hash_client[i].data.name << endl;
 		}
 	}
 }

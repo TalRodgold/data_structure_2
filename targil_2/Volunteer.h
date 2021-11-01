@@ -20,7 +20,6 @@ public:
 	Volunteer() { name = ""; address = ""; phone = 0; city = ""; }
 	Volunteer(string n , string a, int p, string c);
 	~Volunteer() { }
-	string GetName();
 	Volunteer operator=(const Volunteer& v);
 	bool operator==(const Volunteer& v)const;
 	friend ostream& operator<<(ostream& os, const Volunteer& in); // cout
@@ -35,10 +34,6 @@ inline Volunteer::Volunteer(string n, string a, int p, string c)
 	city = c;
 }
 
-inline string Volunteer::GetName()
-{
-	return name;
-}
 
 inline Volunteer Volunteer::operator=(const Volunteer& v)
 {
