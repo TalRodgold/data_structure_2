@@ -34,17 +34,24 @@ inline void DataBase::addVolunteer(Volunteer v)
 inline void DataBase::delVolunteer(Volunteer v)
 {
 	hash_volunteer.Hash_delete(v, v.name);
-	//for (int i = 0; i < hash_client.Get_size(); i++)//i added !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	//{
-	//	auto j = hash_client[i].data.list_of_volunteers.end();
-	//	//hash_client[i].data.list_of_volunteers.remove(v.name);
-	//	j=for_each(hash_client[i].data.list_of_volunteers.begin(), hash_client[i].data.list_of_volunteers.end(), [=](string s, list<string> ::iterator it) {if (s == v.name)return it;});
-	//	if (j != hash_client[i].data.list_of_volunteers.end())
-	//	{
-	//		hash_client[i].data.list_of_volunteers.erase(j);
-	//	}
+	for (int i = 0; i < hash_client.Get_size(); i++)//i added !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	{
+		if (!hash_client[i].data.list_of_volunteers.empty())
+		{
+			for (int i = 0; i < hash_client[i].data.list_of_volunteers.size(); i++)
+			{
+				for_each(hash_client[i].data.list_of_volunteers.begin(), hash_client[i].data.list_of_volunteers.end(), [=](string s) {if (s == v.name) hash_client[i].data.list_of_volunteers.remove(s); });
+			}
+		}
+		//auto j = hash_client[i].data.list_of_volunteers.end();
+		////hash_client[i].data.list_of_volunteers.remove(v.name);
+		//j=for_each(hash_client[i].data.list_of_volunteers.begin(), hash_client[i].data.list_of_volunteers.end(), [=](string s, list<string> ::iterator it) {if (s == v.name)return it;});
+		//if (j != hash_client[i].data.list_of_volunteers.end())
+		//{
+		//	hash_client[i].data.list_of_volunteers.erase(j);
+		//}
 
-	//}
+	}
 }
 
 inline void DataBase::addClient(Client c)
@@ -71,6 +78,7 @@ inline void DataBase::addVolunteerToClient(Volunteer v, Client c)
 inline void DataBase::listOfVolunteers(Client c)
 {
 	int index_client = hash_client.Hash_search(c.phone);
+	cout << "The volunteers that helped to client " << c.phone << ": ";
 	if (index_client != -1)//i added
 	{
 		hash_client[index_client].data.Print_list();

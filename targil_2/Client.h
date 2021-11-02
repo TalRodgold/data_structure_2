@@ -32,7 +32,6 @@ public:
 
 inline void Client::Print_list()
 {
-	cout << "The volunteers that helped to client " << this->phone << ": ";
 	for_each(list_of_volunteers.begin(), list_of_volunteers.end(), [](string n) { cout << n << endl; });
 }
 inline void Client::Add_to_list(string s)
