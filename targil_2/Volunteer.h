@@ -9,24 +9,24 @@
 #include "Item.h"
 using namespace std;
 
-class Volunteer//:public Item<Volunteer, string>
+class Volunteer
 {
 public:
-	string name;
-	string address;
-	int phone;
-	string city;
+	string name; // name
+	string address; // address
+	int phone; // phone number
+	string city; // city
 
-	Volunteer() { name = ""; address = ""; phone = 0; city = ""; }
-	Volunteer(string n , string a, int p, string c);
-	~Volunteer() { }
-	Volunteer operator=(const Volunteer& v);
-	bool operator==(const Volunteer& v)const;
+	Volunteer() { name = ""; address = ""; phone = 0; city = ""; } // default 
+	Volunteer(string n , string a, int p, string c); // constructor
+	~Volunteer() {} // distructor
+	Volunteer operator=(const Volunteer& v); // operator =
+	bool operator==(const Volunteer& v)const; // operator ==
 	friend ostream& operator<<(ostream& os, const Volunteer& in); // cout
 	friend istream& operator>>(istream& is, Volunteer& in); // cin
 };
 
-inline Volunteer::Volunteer(string n, string a, int p, string c)
+inline Volunteer::Volunteer(string n, string a, int p, string c) // constructor
 {
 	name = n;
 	address = a;
@@ -34,8 +34,7 @@ inline Volunteer::Volunteer(string n, string a, int p, string c)
 	city = c;
 }
 
-
-inline Volunteer Volunteer::operator=(const Volunteer& v)
+inline Volunteer Volunteer::operator=(const Volunteer& v) // operator =
 {
 	this->name = v.name;
 	this->address = v.address;
@@ -44,16 +43,16 @@ inline Volunteer Volunteer::operator=(const Volunteer& v)
 	return *this;
 }
 
-inline bool Volunteer::operator==(const Volunteer& v) const
+inline bool Volunteer::operator==(const Volunteer& v) const // operator ==
 {
-	if (this->name == v.name)
+	if (this->name == v.name) // compair by name
 	{
 		return true;
 	}
 	return false;
 }
 
-inline ostream& operator<<(ostream& os, const Volunteer& in)
+inline ostream& operator<<(ostream& os, const Volunteer& in) // cout
 {
 	os << "Name: " << in.name << endl;
 	os << "Address: " << in.address << endl;
@@ -62,16 +61,14 @@ inline ostream& operator<<(ostream& os, const Volunteer& in)
 	return os;
 }
 
-inline istream& operator>>(istream& is, Volunteer& in)
+inline istream& operator>>(istream& is, Volunteer& in) // cin
 {
 	cout << "Enter volunteer name phone address" << endl; // print
 	string input_name;
-	//string input_address;
 	int input_phone;
 	string input_city;
 	is >> input_name  >> input_phone >> input_city;
 	in.name = input_name;
-	//in.address = input_address;
 	in.phone = input_phone;
 	in.city = input_city;
 	return is;

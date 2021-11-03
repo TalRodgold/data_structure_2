@@ -21,7 +21,7 @@ int main()
 	cout << "Hash Tables\n";
 	do
 	{
-		try
+		try // throw expretion
 		{
 			cout << "\nChoose one of the following" << endl;
 			cout << "n: New volunteer" << endl;
@@ -35,23 +35,22 @@ int main()
 			cin >> ch;
 			switch (ch)
 			{
-			case 'n':cin >> v; ht.addVolunteer(v);ht.printallvolunteer();  break;//i added!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-			case 'd':cout << "enter volunteer name ";cin >> v.name; ht.delVolunteer(v);  break;
-			case 'c': cin >> c; ht.addClient(c);ht.printallclient(); break;//i added!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-			case 'l': cout << "enter volunteer name and client phone ";  cin >> v.name >> c.phone; ht.addVolunteerToClient(v, c);ht.printallclient(); break;//i added
+			case 'n':cin >> v; ht.addVolunteer(v); break;
+			case 'd':cout << "enter volunteer name "; cin >> v.name; ht.delVolunteer(v);  break;
+			case 'c': cin >> c; ht.addClient(c); break;
+			case 'l': cout << "enter volunteer name and client phone ";  cin >> v.name >> c.phone; ht.addVolunteerToClient(v, c); break;
 			case '*': cout << "enter client phone ";  cin >> c.phone; ht.listOfVolunteers(c); break;
 			case 'i': cout << "enter volunteer name ";  cin >> v.name; ht.listOfClients(v); break;
 			case 'p': ht.PrintAll(v, c);
 			case 'e':cout << "bye "; break;
 			default: cout << "Error ";  break;
 			}
-		
+			
 		}
 		catch (const char* to_print)
 		{
 			cout << to_print << endl;
 		}
-	} while (ch != 'e');
-	
+	} while (ch != 'e');	
 }
 

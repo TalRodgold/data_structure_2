@@ -6,7 +6,8 @@
 #include <iostream>
 using namespace std;
 
-enum state { empty, full, deleted };
+enum state { empty, full, deleted }; // enum for state of cell in hash table
+
 template <class T, class K>
 class Item
 {

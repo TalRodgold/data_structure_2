@@ -11,100 +11,86 @@ using namespace std;
 
 class DataBase
 {
-	HashClient hash_client{ 100 };
-	HashVolunteer hash_volunteer{ 100 };
+	HashClient hash_client{ 100 }; //hash table of clients
+	HashVolunteer hash_volunteer{ 100 }; //hash table of volunteers
 public:
-	DataBase() {};
-	void addVolunteer(Volunteer v);
-	void delVolunteer(Volunteer v);
-	void addClient(Client c);
-	void Delete_client(Client c);
-	void addVolunteerToClient(Volunteer v, Client c);
-	void listOfVolunteers(Client c);
-	void listOfClients(Volunteer v);
-	void PrintAll(Volunteer v, Client c);
-	void printallclient() { hash_client.printall(); }//i aadded
-	void printallvolunteer() { hash_volunteer.printall(); }//i addd
+	DataBase() {};  // default 
+	void addVolunteer(Volunteer v); // add a volunteer
+	void delVolunteer(Volunteer v); // delete a volunteer
+	void addClient(Client c); // add a client
+	void Delete_client(Client c); // delete a client
+	void addVolunteerToClient(Volunteer v, Client c); // add a volunteer to a client
+	void listOfVolunteers(Client c); // print list of volunteers
+	void listOfClients(Volunteer v); // print list of clients
+	void PrintAll(Volunteer v, Client c); // print all volunteers and clients
 };
-inline void DataBase::addVolunteer(Volunteer v)
+
+inline void DataBase::addVolunteer(Volunteer v) // add a volunteer
 {
 	hash_volunteer.Hash_insert(Item<Volunteer, string>(v, v.name));
 }
 
-inline void DataBase::delVolunteer(Volunteer v)
+inline void DataBase::delVolunteer(Volunteer v) // delete a volunteer
 {
-	hash_volunteer.Hash_delete(v, v.name);
-	for (int i = 0; i < hash_client.Get_size(); i++)//i added !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	int index = hash_volunteer.Hash_search(v.name); // index of wanted volunteer
+	if (index == -1) // if volunteer doesnt exsist
 	{
-		if (!hash_client[i].data.list_of_volunteers.empty())
-		{
-			for (int i = 0; i < hash_client[i].data.list_of_volunteers.size(); i++)
-			{
-				for_each(hash_client[i].data.list_of_volunteers.begin(), hash_client[i].data.list_of_volunteers.end(), [=](string s) {if (s == v.name) hash_client[i].data.list_of_volunteers.remove(s); });
-			}
-		}
-		//auto j = hash_client[i].data.list_of_volunteers.end();
-		////hash_client[i].data.list_of_volunteers.remove(v.name);
-		//j=for_each(hash_client[i].data.list_of_volunteers.begin(), hash_client[i].data.list_of_volunteers.end(), [=](string s, list<string> ::iterator it) {if (s == v.name)return it;});
-		//if (j != hash_client[i].data.list_of_volunteers.end())
-		//{
-		//	hash_client[i].data.list_of_volunteers.erase(j);
-		//}
-
+		throw "ERROR"; // throw
 	}
+	hash_volunteer.Hash_delete(v, v.name); // delete
 }
 
-inline void DataBase::addClient(Client c)
+inline void DataBase::addClient(Client c) // add a client
 {
 	hash_client.Hash_insert(Item<Client, int>(c, c.phone));
 }
 
-inline void DataBase::Delete_client(Client c)
+inline void DataBase::Delete_client(Client c) // delete a client
 {
 	hash_client.Hash_delete(c, c.phone);
 }
 
-inline void DataBase::addVolunteerToClient(Volunteer v, Client c)
+inline void DataBase::addVolunteerToClient(Volunteer v, Client c) // add a volunteer to a client
 {
-	int index_client = hash_client.Hash_search(c.phone);
-	int index_volunteer = hash_volunteer.Hash_search(v.name);
-	if (index_volunteer == -1 || index_client == -1)
+	int index_client = hash_client.Hash_search(c.phone); // find index of client
+	int index_volunteer = hash_volunteer.Hash_search(v.name); // find index of volunteer
+	if (index_volunteer == -1 || index_client == -1 || hash_volunteer[index_volunteer].flag == state::deleted || hash_client[index_client].flag == state::deleted) // if one of them dosent exisist
 	{
-		throw "ERROR";
+		throw "ERROR"; // throw
 	}
-	hash_client[index_client].data.Add_to_list(v.name);
+	hash_client[index_client].data.Add_to_list(v.name); // add do list of volunteers
 }
 
-inline void DataBase::listOfVolunteers(Client c)
+inline void DataBase::listOfVolunteers(Client c) // print list of volunteers
 {
-	int index_client = hash_client.Hash_search(c.phone);
-	cout << "The volunteers that helped to client " << c.phone << ": ";
-	if (index_client != -1)//i added
+	int index_client = hash_client.Hash_search(c.phone); // find index of client
+	cout << "The volunteers that helped to client " << c.phone << ": "; 
+	if (index_client != -1) // if exsist
 	{
-		hash_client[index_client].data.Print_list();
+		hash_client[index_client].data.Print_list(); // print
 	}
 }
 
-inline void DataBase::listOfClients(Volunteer v)
+inline void DataBase::listOfClients(Volunteer v) // print list of clients
 {
 	cout << "The clients that were helped by volunteer " << v.name << ": ";
-	for (int i = 0; i < hash_client.Get_size(); i++)
+	for (int i = 0; i < hash_client.Get_size(); i++) // for all hash
 	{
-		if (hash_client[i].flag == state::empty || hash_client[i].flag == state::deleted)
+		if (hash_client[i].flag == state::empty || hash_client[i].flag == state::deleted) // if empty or deleted
 		{
 			continue;
 		}
-		if(hash_client.FindInList(hash_client[i].data, v.name))
+		if(hash_client.FindInList(hash_client[i].data, v.name)) // else find in list
 		{
-			cout << hash_client[i].data.name << endl;
+			cout << hash_client[i].data.name << endl; // print
 		}
 	}
 }
 
-inline void DataBase::PrintAll(Volunteer v, Client c)
+inline void DataBase::PrintAll(Volunteer v, Client c) // print all volunteers and clients
 {
 	cout << "ALL CLIENTS:" << endl;
-	for (int i = 0; i < hash_client.Get_size(); i++)
+	for (int i = 0; i < hash_client.Get_size(); i++) // print all clients
 	{
 		if (hash_client[i].flag == state::empty || hash_client[i].flag == state::deleted)
 		{
@@ -113,7 +99,7 @@ inline void DataBase::PrintAll(Volunteer v, Client c)
 			cout << hash_client[i].data << endl;
 	}
 	cout << "ALL VOLUNTEERS:" << endl;
-	for (int i = 0; i < hash_client.Get_size(); i++)
+	for (int i = 0; i < hash_client.Get_size(); i++) // print all volunteers
 	{
 		if (hash_volunteer[i].flag == state::empty || hash_volunteer[i].flag == state::deleted)
 		{

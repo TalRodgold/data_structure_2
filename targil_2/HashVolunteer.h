@@ -12,16 +12,17 @@ using namespace std;
 class HashVolunteer:public HashTbls<Volunteer,string>
 {
 public:
-	HashVolunteer(int x) :HashTbls::HashTbls(x) {};
-	int H1(string key) override;
-	int H2(string key) override;
+	HashVolunteer(int x) :HashTbls::HashTbls(x) {}; // constructor
+	int H1(string key) override; // h1 func
+	int H2(string key) override; // h2 func
 };
 
-inline int HashVolunteer::H1(string key)
+inline int HashVolunteer::H1(string key) // h1 func
 {
 	return (key[0] % size);
 }
-inline int HashVolunteer::H2(string key)
+
+inline int HashVolunteer::H2(string key) // h2 func
 {
 	return 1 + (key[0] % (size - 1));
 }

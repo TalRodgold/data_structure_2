@@ -12,17 +12,17 @@ using namespace std;
 class HashClient:public HashTbls<Client,int>
 {
 public:
-	HashClient(int x) :HashTbls::HashTbls(x) {};
-	int H1(int key) override;
-	int H2(int key) override;
-	bool FindInList(Client c, string s) { return c.Find_in_list(s); }
+	HashClient(int x) :HashTbls::HashTbls(x) {}; // constructor
+	int H1(int key) override; // h1 func
+	int H2(int key) override; // h2 func
+	bool FindInList(Client c, string s) { return c.Find_in_list(s); } // find in list
 };
-inline int HashClient::H1(int key)
+inline int HashClient::H1(int key) // h1 func
 {
 	return key % size;
 }
 
-inline int HashClient::H2(int key)
+inline int HashClient::H2(int key) // h2 func
 {
 	return 1+key%(size-1);
 }

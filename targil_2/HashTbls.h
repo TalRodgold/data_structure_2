@@ -13,23 +13,22 @@ template<class T, class K>
 class HashTbls
 {
 protected:
-	int size;
-	Item<T, K>* tbl;//T is item K is key
+	int size; // size of hash table
+	Item<T, K>* tbl; // T is item K is key
 
 public:
 	HashTbls(int number);//constructor
 	~HashTbls();//distructor
-    virtual int H1(K key) = 0;//asistenting hash function
-    virtual int H2(K key) = 0;// hash function
-    int isPrime(int);
-    int Hash(K k, int I);
-    void Hash_insert(Item<T, K> item);
-    int Hash_search(K k);
-    void Hash_delete(T t, K k);
-    void Hash_print();
-    int Get_size();
-    Item<T, K>& operator[](int index);
-    void printall();//i added!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+    virtual int H1(K key) = 0;// h1 hash function
+    virtual int H2(K key) = 0;// h2 hash function
+    int isPrime(int); // get next prime number
+    int Hash(K k, int I); // hash
+    void Hash_insert(Item<T, K> item); // hash insert
+    int Hash_search(K k); // hash search
+    void Hash_delete(T t, K k); // hash delete
+    void Hash_print(); // hash print
+    int Get_size(); // get size
+    Item<T, K>& operator[](int index); // operator []
 };
 
 template<class T, class K>
@@ -49,103 +48,86 @@ inline HashTbls<T, K>::~HashTbls()//distructor
 }
 
 template<class T, class K>
-inline int HashTbls<T, K>::Hash(K k, int I)
+inline int HashTbls<T, K>::Hash(K k, int I) // hash
 {
     return (H1(k) + I*H2(k)) % size;
 }
 
 template<class T, class K>
-inline void HashTbls<T, K>::Hash_insert(Item<T, K> item)
+inline void HashTbls<T, K>::Hash_insert(Item<T, K> item) // hash insert
 {
-    int j = 0;
-    for (int i = 0; i < size; i++)
+    int j = 0; // holds hash location
+    for (int i = 0; i < size; i++) // for size of hash table
     {
-        j = Hash(item.key, i);
-        if (tbl[j].flag == state::empty)
+        j = Hash(item.key, i); // calculate hash
+        if (tbl[j].flag == state::empty || tbl[j].flag == state::deleted) // if cell is free
         {
-            tbl[j] = item;
-            tbl[j].flag = state::full; // casting
-            return;
-        }
-        if (tbl[j].flag == state::deleted)
-        {
-            tbl[j] = item;
-            return;
+            tbl[j] = item; // add to cell
+            tbl[j].flag = state::full; // change cell to full
+            return; 
         }
     }
-    throw "OVERFLOW!";
+    throw "OVERFLOW!"; // else throw
 }
 
 template<class T, class K>
-inline int HashTbls<T, K>::Hash_search(K k)
+inline int HashTbls<T, K>::Hash_search(K k) // hash search
 {
-    int i = 0;
-    int j = 0;
-    while (i < size || tbl[j].flag != state::empty)
+    int i = 0; // index counter
+    int j = 0; // holds hash location
+    while (i < size || tbl[j].flag != state::empty) // untiil we find free cell
     {
-        j = Hash(k, i);
-        if (tbl[j].key == k)
+        j = Hash(k, i); // calculate hash
+        if (tbl[j].key == k) // if found
         {
             return j;
         }
-        i = i + 1;
+        i = i + 1; // grow index counter
     }
-    return -1;
+    return -1; // if not found
 }
 
 template<class T, class K>
-inline void HashTbls<T, K>::Hash_delete(T t, K k)
+inline void HashTbls<T, K>::Hash_delete(T t, K k) // hash delete
 {
-    int i = Hash_search(k);
-    if (i == -1)//i added!!!!!!!!!!!!!!!!!!!!!!1111111
+    int i = Hash_search(k); // location in hash
+    if (i == -1) // if not found
     {
         throw "ERROR";
     }
-    tbl[i].flag = state::deleted;
+    tbl[i].flag = state::deleted; // change cell status to deleted
 }
 
 template<class T, class K>
-inline void HashTbls<T, K>::Hash_print()
+inline void HashTbls<T, K>::Hash_print() // hash print
 {
     for (int i=0;i<size;i++)
     {
-        if (tbl[i].flag == full)
+        if (tbl[i].flag == state::full) // if there is element in cell
         {
-            cout << tbl[i].data << endl;
+            cout << tbl[i].data << endl; // print
         }
     }
 }
 
 template<class T, class K>
-inline int HashTbls<T, K>::Get_size()
+inline int HashTbls<T, K>::Get_size() // get size
 {
-    { return size; }
+    return size; 
 }
 
 template<class T, class K>
-inline Item<T, K>& HashTbls<T, K>::operator[](int index)
+inline Item<T, K>& HashTbls<T, K>::operator[](int index) // operator []
 {
-    return tbl[index]; //the problem is here 
-}
-
-template<class T, class K>
-inline void HashTbls<T, K>::printall()//i added!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111
-{
-    for (int i = 0; i < size; i++)
-    {
-        if (tbl[i].data.phone == 0)
-        {
-            continue;
-        }
-        cout <<"key["<<i<<"]" <<tbl[i].data;
-    }
+    return tbl[index]; 
 }
 
 template<class T, class K>
 inline int HashTbls<T,K>::isPrime(int num)//return the closer prime number to size of arrey
 {
 
-    for (int i = 2; i <= num / 2; i++) {
+    for (int i = 2; i <= num / 2; i++) 
+    {
         if (num % i == 0)
         {
             isPrime(++num);
