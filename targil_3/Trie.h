@@ -18,7 +18,7 @@ protected:
 		bool isEndWord = false;
 		TrieNode() // constructor
 		{
-			for (int i = 0; i < 25; i++)
+			for (int i = 0; i < 26; i++)
 			{
 				this->children[i] = nullptr;
 			}
@@ -121,7 +121,7 @@ bool Trie::recursiveDelete(TrieNode*& t, string str)
 
 bool Trie::hasChildren(TrieNode const* curr) // check if a trie node has children
 {
-	for (int i = 0; i < 25; i++) // for all letters
+	for (int i = 0; i < 26; i++) // for all letters
 	{
 		if (curr->children[i]) 
 		{
