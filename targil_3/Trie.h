@@ -45,6 +45,7 @@ inline void Trie::insertWord(string str) // insert a new word
 		if (t->children[str[i] - 97] == nullptr) // if new node
 		{
 			t->children[str[i] - 97] = new TrieNode();
+			t->children[str[i] - 97]->father = t;
 		}
 		t = t->children[str[i] - 97]; // change current trie to next
 	}
