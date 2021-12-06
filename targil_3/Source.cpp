@@ -6,7 +6,7 @@
 #include<iostream>
 #include <list>
 #include <string>
-#include "trie.h"
+#include "Trie.h"
 using namespace std;
 
 int main()
@@ -48,12 +48,10 @@ int main()
 			else
 				cout << "does not exist\n";
 			break;
-
 		case '4':
 			cout << "Enter a prefix to complete " << endl;
 			cin >> wrd;
-			comp = tr.printAutoSuggestions(wrd);
-
+			comp = tr.printAllWordsFromPrefix(wrd);
 			if (comp == 0)
 				cout << "No string exist with this prefix\n";
 			break;
