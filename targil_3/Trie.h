@@ -8,6 +8,7 @@
 #include <list>
 #include <string>
 using namespace std;
+bool flag;
 class Trie
 {
 protected:
@@ -34,7 +35,7 @@ public:
 	bool searchWord(string str); // search a word
 	int printAllWordsFromPrefix(string str); // print
 private:
-	
+	bool recursiveDelete(TrieNode*& t, string str);
 	bool hasChildren(TrieNode const* curr); // check if a trie node has children
 	void print(TrieNode*& t,string str);
 };
@@ -56,6 +57,7 @@ inline void Trie::insertWord(string str) // insert a new word
 
 inline bool Trie::deleteWord(string str) // delete a word
 {
+	flag = true;
 	return recursiveDelete(this->root, str); // call a recursive func to delete
 }
 
@@ -97,21 +99,36 @@ inline int Trie::printAllWordsFromPrefix(string str)
 	return 1;
 }
 
-TrieNode*& Trie::recursiveDelete(TrieNode*& t, string str)
+bool Trie::recursiveDelete(TrieNode*& t, string str)
 {
 	if (t == NULL)
 	{
 		return false;
 	}
-	if (t->isEndWord)
+	if (t->isEndWord && str.size() == 0)
+	{
 		return true;
-	if (t->children[str[0]-97] == NULL)
+	}
+	if (t->children[str[0] - 97] == NULL)
+	{
 		return false;
+	}
 	recursiveDelete(t->children[str[0] - 97], str.substr(1,str.size()));
-	//if (t->isEndWord && [=](TrieNode*& t) {for (int i = 0;i < 26;i++) { if (t->children[i] != NULL) return false; }}(t))
-	//{
-	//	t->father->children[str[0] - 97] = NULL;
-	//}
+	if (flag)
+	{
+		flag = false;
+		if (t->isEndWord && [=](TrieNode*& t) {for (int i = 0; i < 26; i++) { if (t->children[i] != NULL) return false; }}(t))
+		{
+			t->father->children[str[0] - 97] = NULL;
+			//delete t;
+		}
+		else
+		{
+			t->children[str[0] - 97]->isEndWord = false;
+		}
+
+	}
+	
 
 	//if (t == NULL) // return if Trie is empty
 	//{
