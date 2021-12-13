@@ -130,40 +130,40 @@ bool Trie::recursiveDelete(TrieNode*& t, string str)
 	}
 	
 
-	//if (t == NULL) // return if Trie is empty
-	//{
-	//	return false;
-	//}
-	//if (str.size()) // if the end of the str is not reached
-	//{
-	//	if (t != NULL && t->children[str[0] - 97] != NULL && recursiveDelete(t->children[str[0] - 97], str.substr(1)) && t->isEndWord == false)
-	//	{
-	//		if (!hasChildren(t))
-	//		{
-	//			delete t; // delete
-	//			t = NULL; // delete
-	//			return true;
-	//		}
-	//		else {
-	//			return false;
-	//		}
-	//	}
-	//}
-	//if (str.size() == 0 && t->isEndWord) // if the end of the str is reached
-	//{
-	//	if (!hasChildren(t)) // if leaf and doesn't have any children
-	//	{	
-	//		delete t; // delete 
-	//		t = NULL; // delete 
-	//		return true;
-	//	}
-	//	else // if is leaf and has children
-	//	{
-	//		t->isEndWord = false;
-	//		return false;
-	//	}
-	//}
-	//return false;
+	if (t == NULL) // return if Trie is empty
+	{
+		return false;
+	}
+	if (str.size()) // if the end of the str is not reached
+	{
+		if (t != NULL && t->children[str[0] - 97] != NULL && recursiveDelete(t->children[str[0] - 97], str.substr(1)) && t->isEndWord == false)
+		{
+			if (!hasChildren(t))
+			{
+				delete t; // delete
+				t = NULL; // delete
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+	}
+	if (str.size() == 0 && t->isEndWord) // if the end of the str is reached
+	{
+		if (!hasChildren(t)) // if leaf and doesn't have any children
+		{	
+			delete t; // delete 
+			t = NULL; // delete 
+			return true;
+		}
+		else // if is leaf and has children
+		{
+			t->isEndWord = false;
+			return false;
+		}
+	}
+	return false;
 }
 
 bool Trie::hasChildren(TrieNode const* curr) // check if a trie node has children
