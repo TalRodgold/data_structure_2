@@ -35,10 +35,8 @@ public:
 	bool searchWord(string str); // search a word
 	int printAllWordsFromPrefix(string str); // print
 private:
-	bool recursiveDelete(TrieNode*& t, string str);
-	bool hasChildren(TrieNode const* curr); // check if a trie node has children
-	void print(TrieNode*& t,string str);
-	bool checkIfLeaf(TrieNode*& t);
+	void print(TrieNode*& t,string str); // print
+	bool hasChildren(TrieNode*& t); // check if a trie node has children
 };
 
 inline void Trie::insertWord(string str) // insert a new word
@@ -58,7 +56,38 @@ inline void Trie::insertWord(string str) // insert a new word
 
 inline bool Trie::deleteWord(string str) // delete a word
 {
-	return recursiveDelete(this->root, str); // call a recursive func to delete
+
+		if (!searchWord(str))
+			return false;
+		TrieNode* tn = this->root;
+		int i = 0;
+		for (; i < str.length(); i++)
+		{
+			tn = tn->children[str[i] - 97];
+		}
+
+		if (hasChildren(tn))
+		{
+			tn = tn->father;
+			tn->children[str[i - 1] - 97] = NULL;
+		}
+		else
+		{
+			tn->isEndWord = false;
+			return true;
+		}
+
+		while (tn != this->root)  // we're climbing the tree until we get to the root
+		{
+			if (hasChildren(tn) && tn->isEndWord != true) // we will delete if leaf and not an end of a word
+			{
+				tn = tn->father;
+				tn->children[str[i - 1] - 97] = NULL;
+			}
+			else
+				return true;
+		}
+		return true;
 }
 
 inline bool Trie::searchWord(string str) // search a word
@@ -70,7 +99,7 @@ inline bool Trie::searchWord(string str) // search a word
 	TrieNode* t = this->root; // current trie
 	for (int i = 0; i < str.size(); i++) // for each letter in str
 	{
-		t = t->children[str[i] - 97]; // go to the next node
+		t = t->children[str[i] - 97]; // go to the next node.
 		if (t == NULL) // if the str is not in trie
 		{
 			return false;
@@ -79,7 +108,7 @@ inline bool Trie::searchWord(string str) // search a word
 	return t->isEndWord; // if last letter is end word returns true else returns false	
 }
 
-inline int Trie::printAllWordsFromPrefix(string str)
+inline int Trie::printAllWordsFromPrefix(string str)//print
 {
 
 	if (this->root == NULL) // if trie is empty
@@ -99,86 +128,7 @@ inline int Trie::printAllWordsFromPrefix(string str)
 	return 1;
 }
 
-bool Trie::recursiveDelete(TrieNode*& t, string str)
-{
-	if (t == NULL)
-	{
-		return false;
-	}
-	if (t->isEndWord && str.size() == 0)
-	{
-		return true;
-	}
-	if (t->children[str[0] - 97] == NULL)
-	{
-		return false;
-	}
-	recursiveDelete(t->children[str[0] - 97], str.substr(1,str.size()));
-	{
-		if (str.size() == 1)
-		{
-			if (checkIfLeaf(t))//[=](TrieNode*& t) {for (int i = 0; i < 26; i++) { if (t->children[i] != NULL) return false; }}(t))
-			{
-				t->father->children[str[0] - 97] = NULL;
-				delete t;
-			}
-			else
-			{
-				t->children[str[0] - 97]->isEndWord = false;
-			}
-		}
-	}
-	
-
-	if (t == NULL) // return if Trie is empty
-	{
-		return false;
-	}
-	if (str.size()) // if the end of the str is not reached
-	{
-		if (t != NULL && t->children[str[0] - 97] != NULL && recursiveDelete(t->children[str[0] - 97], str.substr(1)) && t->isEndWord == false)
-		{
-			if (!hasChildren(t))
-			{
-				delete t; // delete
-				t = NULL; // delete
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
-	}
-	if (str.size() == 0 && t->isEndWord) // if the end of the str is reached
-	{
-		if (!hasChildren(t)) // if leaf and doesn't have any children
-		{	
-			delete t; // delete 
-			t = NULL; // delete 
-			return true;
-		}
-		else // if is leaf and has children
-		{
-			t->isEndWord = false;
-			return false;
-		}
-	}
-	return false;
-}
-
-bool Trie::hasChildren(TrieNode const* curr) // check if a trie node has children
-{
-	for (int i = 0; i < 26; i++) // for all letters
-	{
-		if (curr->children[i]) 
-		{
-			return true;    // child found
-		}
-	}
-	return false; 
-}
-
-inline void Trie::print(TrieNode*& t,string str)
+inline void Trie::print(TrieNode*& t,string str) // print
 {
 	if (t->isEndWord)
 	{
@@ -198,7 +148,7 @@ inline void Trie::print(TrieNode*& t,string str)
 
 }
 
-inline bool Trie::checkIfLeaf(TrieNode*& t)
+inline bool Trie::hasChildren(TrieNode*& t) // check if a trie node has children
 {
 	for (int i = 0; i < 26; i++)
 	{
