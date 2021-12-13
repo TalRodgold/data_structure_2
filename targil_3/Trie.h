@@ -8,7 +8,6 @@
 #include <list>
 #include <string>
 using namespace std;
-bool flag;
 class Trie
 {
 protected:
@@ -17,9 +16,10 @@ protected:
 	public:
 		TrieNode* children[26];
 		TrieNode* father;
-		bool isEndWord = false;
+		bool isEndWord;
 		TrieNode() // constructor
 		{
+			isEndWord = false;
 			for (int i = 0; i < 26; i++)
 			{
 				this->children[i] = NULL;
@@ -38,6 +38,7 @@ private:
 	bool recursiveDelete(TrieNode*& t, string str);
 	bool hasChildren(TrieNode const* curr); // check if a trie node has children
 	void print(TrieNode*& t,string str);
+	bool checkIfLeaf(TrieNode*& t);
 };
 
 inline void Trie::insertWord(string str) // insert a new word
@@ -57,7 +58,6 @@ inline void Trie::insertWord(string str) // insert a new word
 
 inline bool Trie::deleteWord(string str) // delete a word
 {
-	flag = true;
 	return recursiveDelete(this->root, str); // call a recursive func to delete
 }
 
@@ -114,19 +114,19 @@ bool Trie::recursiveDelete(TrieNode*& t, string str)
 		return false;
 	}
 	recursiveDelete(t->children[str[0] - 97], str.substr(1,str.size()));
-	if (flag)
 	{
-		flag = false;
-		if (t->isEndWord && [=](TrieNode*& t) {for (int i = 0; i < 26; i++) { if (t->children[i] != NULL) return false; }}(t))
+		if (str.size() == 1)
 		{
-			t->father->children[str[0] - 97] = NULL;
-			//delete t;
+			if (checkIfLeaf(t))//[=](TrieNode*& t) {for (int i = 0; i < 26; i++) { if (t->children[i] != NULL) return false; }}(t))
+			{
+				t->father->children[str[0] - 97] = NULL;
+				delete t;
+			}
+			else
+			{
+				t->children[str[0] - 97]->isEndWord = false;
+			}
 		}
-		else
-		{
-			t->children[str[0] - 97]->isEndWord = false;
-		}
-
 	}
 	
 
@@ -196,4 +196,14 @@ inline void Trie::print(TrieNode*& t,string str)
 		}
 	}
 
+}
+
+inline bool Trie::checkIfLeaf(TrieNode*& t)
+{
+	for (int i = 0; i < 26; i++)
+	{
+		if (t->children[i] != NULL)
+			return false;
+	}
+	return true;
 }
