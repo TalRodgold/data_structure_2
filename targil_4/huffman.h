@@ -13,9 +13,16 @@ using namespace std;
 
 class huffman
 {
+private:
 	HuffmanNode* root;
 
 public:
-	huffman() { root = new HuffmanNode(); }
+	huffman() { root = NULL; } // constructor
+	void Start(string str); // start and build the huffman tree
+	void GetLeafs(); // get all the leafs in tree
+	int GetNumOfLetters(string str) { return root->GetCounter(str); } // get number of letters
+	void GetTreeStructer() { root->GetTreeInCode(root); } // get tree in code
+	void Encode(string str); // Encode
+	void Decode(int num_of_leafs, string letters, string structer, string text); //Decode
 };
 
